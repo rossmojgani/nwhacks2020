@@ -137,8 +137,8 @@ POST request which puts a transaction into transaction database
 with correct fields
 
 """
-@app.route("/users/api/v1.0/register_transaction", methods=['POST'])
-def register_user():
+@app.route("/users/api/v1.0/new_transaction", methods=['POST'])
+def register_transaction():
     print("Registering transaction")
 
     mydb = myclient['rapidserve-db']
