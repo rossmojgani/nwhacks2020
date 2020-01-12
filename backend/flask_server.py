@@ -269,8 +269,8 @@ def get_order(orderid):
     print("GET request for ordetable_id: {}".format(orderid))
 
     #if my_col.find_one({'table_id': orderid}).count() > 0:
-    
-    return order
+
+    return jsonify(order)
     #else:
     #    print("No transactions for given orderid")
     #    return ''
