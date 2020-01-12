@@ -60,6 +60,18 @@ const styles = StyleSheet.create({
     Bottom: {
         flexDirection: "row",
         height: "15%"
+    },
+    Row: {
+        flexDirection: "row"
+    },
+    Box: {
+        width: 300,
+        height: 300,
+        borderWidth: 10,
+        borderColor: "#13C0EB",
+        alignSelf: "center",
+        marginTop: "35%",
+        borderRadius: 30
     }
 });
 
@@ -67,6 +79,7 @@ class Scan extends React.Component {
     state = {
         hasCameraPermission: null,
         scanned: false,
+        tableId: null,
     };
 
     async componentDidMount() {
@@ -80,19 +93,23 @@ class Scan extends React.Component {
 
     handleBarCodeScanned = ({ data }) => {
         this.setState({ scanned: true });
+        this.setState({tableId: data});
         alert(`Table ID: ${data} has been scanned!`);
     };
 
-    putTableId = ({userId, tableId}) => {
-        fetch("http://34.83.193.124/" + userId, {
+    putTableId = () => {
+        const table = {
+            table_id: this.state.tableId
+        }
+        fetch("http://34.83.193.124/users/api/v1.0/33333333333333333", {
             method: "PUT",
-            body: JSON.stringify({
-                tableId
-            })
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(table)
         }).then((response) => {
-            this.props.navigation.navigate("CustomerView", {
-                tableId: response,
-            })
+            alert('Put request gucci');
+            // this.props.navigation.navigate("CustomerView", {
+            //     tableId: response,
+            // })
         }).catch(err => {
             console.log(err);
         })
@@ -133,8 +150,13 @@ class Scan extends React.Component {
 
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-          style={styles.Scanner}
-        />
+          style={styles.Scanner}>
+
+            <View style={styles.Box}>
+
+            </View>
+              
+        </BarCodeScanner>   
 
         {!scanned &&(<View
             style={styles.TouchableOpacityScan}
@@ -156,7 +178,9 @@ class Scan extends React.Component {
 
             {scanned && (<TouchableOpacity
                 style={styles.TouchableOpacityScanAgain}
-                onPress={() => this.setState({ scanned: false })}
+                onPress={() => 
+                    this.setState({ scanned: false, tableId: null })
+                }
             >
                 <View
                     style={styles.ViewScanAgain}
@@ -173,7 +197,7 @@ class Scan extends React.Component {
 
             {scanned && (<TouchableOpacity
                 style={styles.TouchableOpacityConfirm}
-                onPress={() => this.putTableId("12345", data)}
+                onPress={() => this.putTableId()}
             >
                 <View
                     style={styles.ViewConfirm}
