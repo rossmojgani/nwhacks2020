@@ -58,7 +58,7 @@ database based on userid argument
 """
 @app.route("/users/api/v1.0/<userid>", methods=['GET'])
 def get_user(userid):
-print(type(userid))
+    print(type(userid))
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
     print(my_col.find({'user_id': userid}).count())
