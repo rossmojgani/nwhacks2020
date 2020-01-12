@@ -7,6 +7,7 @@ requests
 
 """
 
+import json
 from flask import Flask
 from flask import request
 from flask import jsonify
@@ -80,15 +81,16 @@ def register_user():
     print("Registering user")
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
-    user_id = request.json['user_id']
-    print(user_id)
-    full_name = request.json['full_name']
-    phone = request.json['phone_number']
-    credit = request.json['credit']
-    email = request.json['email']
-    restaurant_id = request.json['restaurant_id']
-    table_id = request.json['table_id']
-    role = request.json['role']
+    print(request.json)
+    req_data = request.get_json()
+    full_name = req_data['full_name']
+    user_id = req_data['user_id']
+    phone = req_data['phone_number']
+    credit = req_data['credit']
+    email = req_data['email']
+    restaurant_id = req_data['restaurant_id']
+    table_id = req_data['table_id']
+    role = req_data['role']
     return_user = {'user_id': user_id,
                    'full_name': full_name,
                    'phone_number': phone,
@@ -118,12 +120,14 @@ a user id field
 def enter_table_id(userid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
+    req_data = request.get_json()
+    print(req_data)
     myquery = {"user_id": userid}
-    newvalues = {"$set": {"table_id": request.json['table_id']}}
+    newvalues = {"$set": {"table_id": req_data['table_id']}}
     x = my_col.update_many(myquery, newvalues)
     print(x.modified_count, "documents updated.")
     return jsonify({'user_id': userid,
-                    'table_id': request.json['table_id']})
+                    'table_id': req_data['table_id']})
 
 
 if __name__ == '__main__':
