@@ -275,6 +275,35 @@ def get_order(orderid):
                   'ammount_left': my_order['ammount_left']}
 
     return jsonify(output)
+    
+"""
+GET request route to return true if table exits
+in mongoDB and is active and false
+otherwise
+
+"""
+@app.route("/users/api/v1.0/table_exists/<tableid>", methods=['GET'])
+def check_user(tableid):
+    print(type(tableid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    print(my_col.find({'table_id': tableid}).count())
+    print("GET request for tableid: {}".format(tableid))
+
+    if my_col.find({'table_id': tableid}).count() > 0:
+        s = my_col.find_one({"table_id": tableid})
+        print("Found tableid in database, returning json {}".format(s))
+        output = {'table_id': s['table_id'],
+                  'waiter_id': s['waiter_id'],
+                  'order': s['order'],
+                  'amount': s['amount'],
+                  'amount_left': s['amount_left']}
+        return jsonify(output)
+    else:
+        print("Did not find userid, returning empty json")
+        return ''
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
