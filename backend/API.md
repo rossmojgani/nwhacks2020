@@ -27,13 +27,13 @@ Returns user object if a user exists and empty json otherwise
     If user exists:
     ```json
     { 
-      "user_id": 2,
+      "user_id": "24093580958203",
       "full_name": "Victor Par",
       "phone_number": "604-384-3483",
       "credit": 40.30,
       "email": "testing@testing.com",
-      "restaurant_id": 30483,
-      "table_id": 34893,
+      "restaurant_id": "30483",
+      "table_id": "34893",
       "role": 0 (0 if customer, 1 if waiter)
     }
     ```
@@ -90,13 +90,13 @@ Makes new user object from request json
 
     ```json
     { 
-      "user_id": 2,
+      "user_id": "24093580958203",
       "full_name": "Victor Par",
       "phone_number": "604-384-3483",
       "credit": 40.30,
       "email": "testing@testing.com",
-      "restaurant_id": 30483,
-      "table_id": 34893,
+      "restaurant_id": "30483",
+      "table_id": "34893",
       "role": 0 (0 if customer, 1 if waiter)
     }
     ```
@@ -107,13 +107,13 @@ Makes new user object from request json
     **Content:**
     ```json
     { 
-      "user_id": 2,
+      "user_id": "24093580958203",
       "full_name": "Victor Par",
       "phone_number": "604-384-3483",
       "credit": 40.30,
       "email": "testing@testing.com",
-      "restaurant_id": 30483,
-      "table_id": 34893,
+      "restaurant_id": "30483",
+      "table_id": "34893",
       "role": 0 (0 if customer, 1 if waiter)
     }
     ```
@@ -138,7 +138,7 @@ Puts new table id in user object
 
     ```json
     { 
-      "table_id": 34893
+      "table_id": "34893"
     }
     ```
 
@@ -148,8 +148,8 @@ Puts new table id in user object
     **Content:**
     ```json
     { 
-      "user_id": 2,
-      "table_id": 34893
+      "user_id": "23903284298420",
+      "table_id": "34893"
     }
     ```
 
@@ -173,10 +173,10 @@ Makes new transaction object from request json
 
     ```json
     {
-      "user_id": 2,
+      "user_id": "2495803982493",
       "ammount": 100.00,
-      "restraunt_id": 5,
-      "table_id": 34893,
+      "restraunt_id": "592380923",
+      "table_id": "3489390",
       "date": "01-12-2020",
       "time": "15:34"
     }
@@ -188,10 +188,10 @@ Makes new transaction object from request json
     **Content:**
     ```json
     { 
-      "user_id": 2,
+      "user_id": "223032980",
       "ammount": 100.00,
-      "restraunt_id": 5,
-      "table_id": 34893,
+      "restraunt_id": "5382403",
+      "table_id": "34893",
       "date": "01-12-2020",
       "time": "15:34"
     }
@@ -225,19 +225,19 @@ Returns transaction objects if a user's transaction history exists and empty jso
   * **Code:** 200 <br />
     **Content:**
     If user exists:
-    ```jsonhttps://docs.mongodb.com/manual/reference/method/db.collection.find/
+    ```json
     { 
-      "user_id": 2,
+      "user_id": "233920",
       "ammount": 100.00,
-      "restraunt_id": 5,
-      "table_id": 34893,
+      "restraunt_id": "523904",
+      "table_id": "34893",
       "date": "01-12-2020",
       "time": "15:34"
-    }
+    },
     { 
-      "user_id": 2,
+      "user_id": "22380998",
       "ammount": 150.00,
-      "restraunt_id": 55
+      "restraunt_id": "553209",
       "table_id": 343,
       "date": "01-12-2020",
       "time": "19:34"
