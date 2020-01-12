@@ -248,3 +248,41 @@ Returns transaction objects if a user's transaction history exists and empty jso
     {
     }
     ```
+
+**Put restaurant_id, phone_number, and role in user Object**
+----
+Puts restaurant_id, phone_number, and role in user object
+
+* **URL**
+
+  /users/api/v1.0/waiter/<userid>
+
+* **Method**
+
+  `PUT`
+
+* **URL Params**
+
+  user_id
+
+* **Data Params**
+
+    ```json
+    { 
+      "restaurant_id": "39230",
+      "phone_number": "6043289290",
+      "role": 1
+    }
+    ```
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    ```json
+    { 
+      "restaurant_id": "39230",
+      "phone_number": "6043289290",
+      "role": 1
+    }
+    ```

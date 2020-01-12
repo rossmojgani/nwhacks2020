@@ -195,6 +195,27 @@ def get_transactions(userid):
         print("No transactions for given userid")
         return ''
 
+
+"""
+PUT request which puts new table id in a user object given
+a user id field
+
+"""
+@app.route("/users/api/v1.0/waiter/<userid>", methods=['PUT'])
+def enter_waiter_fields(userid):
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['users']
+    req_data = request.get_json()
+    print(req_data)
+    myquery = {"user_id": userid}
+    newvalues = {"$set": {"restaurant_id": req_data['restaurant_id'],
+                          "phone_number": req_data['phone_number'],
+                          "role": req_data['role']}}
+    x = my_col.update_many(myquery, newvalues)
+    print(x.modified_count, "documents updated.")
+    return jsonify({'user_id': userid,
+                    'table_id': req_data['table_id']})
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # app.run(host="127.0.0.1", port=80)
