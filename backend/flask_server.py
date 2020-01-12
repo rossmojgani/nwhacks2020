@@ -11,11 +11,14 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_pymongo import PyMongo
+import pymongo
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'rapidserve-db'
 app.config["MONGO_URI"] = "mongodb://localhost:27017/rapidserve-db"
 mongo = PyMongo(app)
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
 """
 Basic route used as a health check to see
@@ -56,25 +59,26 @@ with correct fields
 """
 @app.route("/users/api/v1.0/register", methods=['POST'])
 def register_user():
-    users_collection = mongo.db.users
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['users']
     user_id = request.json['user_id']
     full_name = request.json['full_name']
     phone = request.json['phone_number']
-    credit = request.json['40.30']
+    credit = request.json['credit']
     email = request.json['email']
     restaurant_id = request.json['restaurant_id']
     table_id = request.json['table_id']
     role = request.json['role']
-    users_collection.insert({'user_id': user_id,
+    print("GOT TO BEFORE INSERTION")
+    my_col.insert_one({'user_id': user_id,
                              'full_name': full_name,
                              'phone_number': phone,
                              'credit': credit,
                              'email': email,
                              'restaurant_id': restaurant_id,
                              'table_id': table_id,
-                             'role': role,
-                             'users_collection': users_collection})
-    return "Storing user! {}".format(request.json())
+                             'role': role})
+    return "Storing user! {}".format(request.json)
 
 
 if __name__ == '__main__':
