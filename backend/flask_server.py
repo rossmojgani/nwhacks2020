@@ -39,8 +39,8 @@ otherwise
 def check_user(userid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
-    s = my_col.find_one({"user_id": userid})
-    if s:
+    if my_col.find({'user_id': userid}).count > 0:
+        s = my_col.find_one({"user_id": userid})
         output = {'user_id': s['user_id'],
                   'full_name': s['full_name'],
                   'phone_number': s['phone_number'],
