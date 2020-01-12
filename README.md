@@ -49,7 +49,7 @@ table to pay individually.
 * API Details **(Flask/Python API)**
   * The API for this application was implemented using the flask framework
   along with Python, there was documentation which the frontend used to
-  make their HTTP requests, [API DOCUMENTATION](https://github.com/rossmojgani/rapidserve/blob/master/backend/API.md),
+  make their HTTP requests, [API DOCUMENTATION](https://github.com/rossmojgani/rapidserve/blob/master/API.md),
   this API document was the contract between the frontend and the backend in
   terms of what arguments were sent into what type of HTTP requests. The API
   was hosted on a virtual machine in the cloud.
@@ -61,7 +61,7 @@ table to pay individually.
   server using PyMongo and Flask_PyMongo, we used two collections mainly,
   **users, and orders** which stored objects based on what a user needed to
   have stored (see [API DOCUMENTATION](https://github.com/rossmojgani/rapidserve/blob/master/backend/API.md)
-  for a user object example) and for what a tables order would be (again, see [API DOCUMENTATION](https://github.com/rossmojgani/rapidserve/blob/master/backend/API.md) for a table
+  for a user object example) and for what a tables order would be (again, see [API DOCUMENTATION](https://github.com/rossmojgani/rapidserve/blob/master/API.md) for a table
   object example)
  
   
