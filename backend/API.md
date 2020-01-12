@@ -27,7 +27,7 @@ Returns user object if a user exists and empty json otherwise
     If user exists:
     ```json
     { 
-      "id": 2,
+      "user_id": 2,
       "full_name": "Victor Par",
       "phone_number": "604-384-3483",
       "credit": 40.30,
