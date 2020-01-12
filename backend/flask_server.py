@@ -40,7 +40,7 @@ def check_user(userid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
     if my_col.find({'user_id': int(userid)}).count() > 0:
-        s = my_col.find({"user_id": userid})
+        s = my_col.find_one({"user_id": int(userid)})
         print(s)
         output = {'user_id': s['user_id'],
                   'full_name': s['full_name'],
@@ -92,10 +92,17 @@ def register_user():
                    'table_id': table_id,
                    'role': role}
     my_col.insert_one(return_user)
-    return jsonify(return_user)
+    return jsonify({'result': {'user_id': user_id,
+                               'full_name': full_name,
+                               'phone_number': phone,
+                               'credit': credit,
+                               'email': email,
+                               'restaurant_id': restaurant_id,
+                               'table_id': table_id,
+                               'role': role}})
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
-    # app.run(host="127.0.0.1", port=80)
+    # app.run(host="0.0.0.0", port=80)
+    app.run(host="127.0.0.1", port=80)
 
