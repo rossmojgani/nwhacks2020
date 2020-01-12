@@ -7,15 +7,11 @@ requests
 
 """
 
-import json
-import enforce
 from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_pymongo import PyMongo
 import pymongo
-
-from transactions import Transaction
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'rapidserve-db'
@@ -23,14 +19,6 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/rapidserve-db"
 mongo = PyMongo(app)
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-
-"""
-Basic route used as a health check to see
-if API is working or not
-"""
-@app.route("/")
-def hello():
-    return "Hello, World!"
 
 
 """
@@ -132,6 +120,7 @@ def enter_table_id(userid):
     return jsonify({'user_id': userid,
                     'table_id': req_data['table_id']})
 
+
 """
 POST request which puts a transaction into transaction database
 with correct fields
@@ -148,29 +137,30 @@ def register_transaction():
 
     req_data = request.get_json()
     user_id = req_data['user_id']
-    ammount = req_data['ammount']
+    amount = req_data['amount']
     restraunt_id = req_data['restraunt_id']
     table_id = req_data['table_id']
     date = req_data['date']
     time = req_data['time']
 
     return_transaction = {'user_id': user_id,
-                   'ammount': ammount,
-                   'restraunt_id': restraunt_id,
-                   'table_id': table_id,
-                   'date': date,
-                   'time': time}
+                          'amount': amount,
+                          'restraunt_id': restraunt_id,
+                          'table_id': table_id,
+                          'date': date,
+                          'time': time}
 
     my_col.insert_one(return_transaction)
 
     print("Registered transaction: {}".format(return_transaction))
 
     return jsonify({'user_id': user_id,
-                    'ammount': ammount,
+                    'amount': amount,
                     'restraunt_id': restraunt_id,
                     'table_id': table_id,
                     'date': date,
                     'time': time})
+
 
 """
 GET request to get all transactions of a user id
@@ -194,6 +184,7 @@ def get_transactions(userid):
     else:
         print("No transactions for given userid")
         return ''
+
 
 """
 PUT request which puts new table id in a user object given
@@ -224,7 +215,7 @@ POST request for an order
 """
 @app.route("/users/api/v1.0/new_order", methods=['POST'])
 def register_trregister_order():
-    print("Registering ")
+    print("Registering new order...")
 
     mydb = myclient['rapidserve-db']
     my_col = mydb['orders']
@@ -236,24 +227,61 @@ def register_trregister_order():
     waiter_id = req_data['waiter_id']
 
     order = req_data['order']
-    ammount = req_data['ammount']
-    ammount_left = req_data['ammount_left']
+    amount = req_data['amount']
+    amount_left = req_data['amount_left']
 
     return_order = {'table_id': table_id,
-                   'waiter_id': waiter_id,
-                   'order': order,
-                   'ammount': ammount,
-                   'ammount_left': ammount_left}
+                    'waiter_id': waiter_id,
+                    'order': order,
+                    'amount': amount,
+                    'amount_left': amount_left}
 
     my_col.insert_one(return_order)
 
     print("Registered order: {}".format(return_order))
 
     return jsonify({'table_id': table_id,
-                   'waiter_id': waiter_id,
-                   'order': order,
-                   'ammount': ammount,
-                   'ammount_left': ammount_left})
+                    'waiter_id': waiter_id,
+                    'order': order,
+                    'amount': amount,
+                    'amount_left': amount_left})
+
+
+"""
+PUT request which puts new order list into a order object
+
+"""
+@app.route("/users/api/v1.0/order/<tableid>", methods=['PUT'])
+def change_order(tableid):
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+    req_data = request.get_json()
+    print(req_data)
+    myquery = {"table_id": tableid}
+    newvalues = {"$set": {"order": req_data['order']}}
+    x = my_col.update_many(myquery, newvalues)
+    print(x.modified_count, "documents updated.")
+    return jsonify({'table_id': tableid,
+                    'order': req_data['order']})
+
+
+"""
+PUT request which puts new order list into a order object
+
+"""
+@app.route("/users/api/v1.0/amount_left/<tableid>", methods=['PUT'])
+def change_amount_left(tableid):
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+    req_data = request.get_json()
+    print(req_data)
+    myquery = {"table_id": tableid}
+    newvalues = {"$set": {"amount_left": req_data['amount_left']}}
+    x = my_col.update_many(myquery, newvalues)
+    print(x.modified_count, "documents updated.")
+    return jsonify({'table_id': tableid,
+                    'amount_left': req_data['amount_left']})
+
 
 """
 GET request for an order id
@@ -272,13 +300,33 @@ def get_order(orderid):
     print("GET request for ordetable_id: {}".format(orderid))
 
     output = {'table_id': my_order['table_id'],
-                  'waiter_id': my_order['waiter_id'],
-                  'order': my_order['order'],
-                  'ammount': my_order['ammount'],
-                  'ammount_left': my_order['ammount_left']}
+              'waiter_id': my_order['waiter_id'],
+              'order': my_order['order'],
+              'amount': my_order['amount'],
+              'amount_left': my_order['amount_left']}
 
     return jsonify(output)
 
+
+"""
+PUT request to change user's credit
+
+"""
+@app.route("/users/api/v1.0/credit/<userid>", methods=['PUT'])
+def change_user_credit(userid):
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['users']
+    req_data = request.get_json()
+    print(req_data)
+    myquery = {"user_id": userid}
+    newvalues = {"$set": {"credit": req_data['credit']}}
+    x = my_col.update_many(myquery, newvalues)
+    print(x.modified_count, "documents updated.")
+    return jsonify({'user_id': userid,
+                    'credit': req_data['credit']})
+
+
 if __name__ == '__main__':
+    # run the app on port 80
     app.run(host="0.0.0.0", port=80)
     # app.run(host="127.0.0.1", port=80)
