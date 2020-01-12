@@ -159,7 +159,7 @@ Makes new transaction object from request json
 
 * **URL**
 
-  /users/api/v1.0/register_transaction
+  /users/api/v1.0/new_transaction
 
 * **Method**
 
