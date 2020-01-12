@@ -283,7 +283,7 @@ otherwise
 
 """
 @app.route("/users/api/v1.0/table_exists/<tableid>", methods=['GET'])
-def check_user(tableid):
+def check_table(tableid):
     print(type(tableid))
 
     mydb = myclient['rapidserve-db']
