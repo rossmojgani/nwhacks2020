@@ -286,3 +286,88 @@ Puts restaurant_id, phone_number, and role in user object
       "role": 1
     }
     ```
+    
+**Post new order**
+----
+Makes new order object from request json
+
+* **URL**
+
+  /users/api/v1.0/new_order
+
+* **Method**
+
+  `POST`
+
+* **URL Params**
+
+  None
+
+* **Data Params**
+
+    ```json
+    {
+      "table_id": "155",
+      "waiter_id": "",56
+      "order": [["Burger", 100.00, 0],["Salmon", 45.64, 1],["Fries", 54.54, 0], ...],
+      "ammount": 524.00,
+      "ammount_left": 444.90
+    }
+    ```
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    ```json
+    { 
+      "table_id": "155",
+      "waiter_id": "",56
+      "order": [["Burger", 100.00, 0],["Salmon", 45.64, 1],["Fries", 54.54, 0], ...],
+      "ammount": 524.00,
+      "ammount_left": 444.90
+    }
+    ```
+    
+    
+**Get Order Info**
+----
+Returns transaction objects if a user's transaction history exists and empty json otherwise
+
+* **URL**
+
+  /users/api/v1.0/get_order/<orderid>
+
+* **Method**
+
+  `GET`
+
+* **URL Params**
+
+  **Required:**
+
+  `orderid=[string]`
+
+* **Data Params**
+
+  None
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    If user exists:
+    ```json
+    { 
+      "table_id": "155",
+      "waiter_id": "",56
+      "order": [["Burger", 100.00, 0],["Salmon", 45.64, 1],["Fries", 54.54, 0], ...],
+      "ammount": 524.00,
+      "ammount_left": 444.90
+    }
+    ```
+    If user does not exist:
+    ```json
+    {
+    }
+    ```
