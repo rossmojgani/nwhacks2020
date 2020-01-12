@@ -266,14 +266,14 @@ def get_order(orderid):
     print(my_col.find_one({'table_id': orderid}))
     print("GET request for ordetable_id: {}".format(orderid))
 
-    if my_col.find_one({'table_id': orderid}).count() > 0:
+    #if my_col.find_one({'table_id': orderid}).count() > 0:
 
-        order = my_col.find_one({"table_id": orderid})
+    order = my_col.find_one({"table_id": orderid})
 
-        return jsonify(order)
-    else:
-        print("No transactions for given orderid")
-        return ''
+    #    return jsonify(order)
+    #else:
+    #    print("No transactions for given orderid")
+    #    return ''
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
