@@ -7,7 +7,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 const styles = StyleSheet.create({
     TouchableOpacityScan: {
         width: "100%",
-        height: "10%",
+        height: "15%",
     },
     TextScan: {
         color: "#ffffff",
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     Scanner: {
-        height: "90%",
+        height: "85%",
         width: "100%",
     },
     TouchableOpacityConfirm: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     ViewConfirm: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#03C04A",
+        backgroundColor: "#13C0EB",
         alignContent: "center",
         justifyContent: "center"
     },
@@ -53,26 +53,50 @@ const styles = StyleSheet.create({
     ViewScanAgain: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#13C0EB",
+        backgroundColor: "#292E30",
         alignContent: "center",
         justifyContent: "center"
     },
+    Bottom: {
+        flexDirection: "row",
+        height: "15%"
+    }
 });
 
 class Scan extends React.Component {
-  state = {
-    hasCameraPermission: null,
-    scanned: false,
-  };
+    state = {
+        hasCameraPermission: null,
+        scanned: false,
+    };
 
-  async componentDidMount() {
-    this.getPermissionsAsync();
-  }
+    async componentDidMount() {
+        this.getPermissionsAsync();
+    }
 
-  getPermissionsAsync = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === 'granted' });
-  }
+    getPermissionsAsync = async () => {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+        this.setState({ hasCameraPermission: status === 'granted' });
+    }
+
+    handleBarCodeScanned = ({ data }) => {
+        this.setState({ scanned: true });
+        alert(`Table ID: ${data} has been scanned!`);
+    };
+
+    putTableId = ({userId, tableId}) => {
+        fetch("http://34.83.193.124/" + userId, {
+            method: "PUT",
+            body: JSON.stringify({
+                tableId
+            })
+        }).then((response) => {
+            this.props.navigation.navigate("CustomerView", {
+                tableId: response,
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
   render() {
     const { hasCameraPermission, scanned } = this.state;
@@ -112,23 +136,23 @@ class Scan extends React.Component {
           style={styles.Scanner}
         />
 
-        {scanned &&(<View style={{flexDirection: "row", height: "10%"}}>
-            {scanned && (<TouchableOpacity
-                style={styles.TouchableOpacityConfirm}
-                onPress={() => this.setState({ scanned: false })}
+        {!scanned &&(<View
+            style={styles.TouchableOpacityScan}
+            onPress={() => this.setState({ scanned: false })}
+        >
+            <View
+                style={styles.ViewScan}
             >
-                <View
-                    style={styles.ViewConfirm}
-                >
-                        <Text
-                            style={styles.TextConfirm}
-                        >
-                            Confirm
-                        </Text>
-                </View>
+                    <Text
+                        style={styles.TextScan}
+                    >
+                        Scan A QR Code
+                    </Text>
+            </View>
 
-            </TouchableOpacity>
-            )}
+        </View>)}
+
+        {scanned &&(<View style={styles.Bottom}>
 
             {scanned && (<TouchableOpacity
                 style={styles.TouchableOpacityScanAgain}
@@ -146,16 +170,28 @@ class Scan extends React.Component {
 
             </TouchableOpacity>
             )}
+
+            {scanned && (<TouchableOpacity
+                style={styles.TouchableOpacityConfirm}
+                onPress={() => this.putTableId("12345", data)}
+            >
+                <View
+                    style={styles.ViewConfirm}
+                >
+                        <Text
+                            style={styles.TextConfirm}
+                        >
+                            Confirm
+                        </Text>
+                </View>
+
+            </TouchableOpacity>
+            )}
         </View>)}
 
       </View>
     );
   }
-
-    handleBarCodeScanned = ({ data }) => {
-        this.setState({ scanned: true });
-        alert(`Table ID: ${data} has been scanned!`);
-    };
 }
 
 export default Scan;
