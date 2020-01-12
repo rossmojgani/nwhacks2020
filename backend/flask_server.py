@@ -195,7 +195,6 @@ def get_transactions(userid):
         print("No transactions for given userid")
         return ''
 
-
 """
 PUT request which puts new table id in a user object given
 a user id field
@@ -216,7 +215,66 @@ def enter_waiter_fields(userid):
     return jsonify({'user_id': userid,
                     'table_id': req_data['table_id']})
 
+"""
+POST request for an order
+
+"""
+@app.route("/users/api/v1.0/new_order", methods=['POST'])
+def register_trregister_order():
+    print("Registering ")
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    print(request.json)
+
+    req_data = request.get_json()
+    table_id = req_data['table_id']
+    waiter_id = req_data['waiter_id']
+
+    order = req_data['order']
+    ammount = req_data['ammount']
+    ammount_left = req_data['ammount_left']
+
+    return_order = {'table_id': table_id,
+                   'waiter_id': waiter_id,
+                   'order': order,
+                   'ammount': ammount,
+                   'ammount_left': ammount_left}
+
+    my_col.insert_one(return_order)
+
+    print("Registered order: {}".format(return_order))
+
+    return jsonify({'table_id': table_id,
+                   'waiter_id': waiter_id,
+                   'order': order,
+                   'ammount': ammount,
+                   'ammount_left': ammount_left})
+
+"""
+GET request for an order id
+
+"""
+@app.route("/users/api/v1.0/get_order/<orderid>", methods=['GET'])
+def get_order(orderid):
+    print(type(orderid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    print(my_col.find_one({'order_id': orderid}))
+    print("GET request for orderid: {}".format(orderid))
+
+    if my_col.find_one({'user_id': orderid}).count() > 0:
+
+        transactions = my_col.find_one({"order_id": orderid})
+
+        return jsonify(transactions)
+    else:
+        print("No transactions for given userid")
+        return ''
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # app.run(host="127.0.0.1", port=80)
-
