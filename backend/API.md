@@ -153,3 +153,46 @@ Puts new table id in user object
     }
     ```
 
+**Post new transaction**
+----
+Makes new transaction object from request json
+
+* **URL**
+
+  /users/api/v1.0/register_transaction
+
+* **Method**
+
+  `POST`
+
+* **URL Params**
+
+  None
+
+* **Data Params**
+
+    ```json
+    {
+      "user_id": 2,
+      "ammount": 100.00,
+      "restraunt_id": 5,
+      "table_id": 34893,
+      "date": "01-12-2020",
+      "time": "15:34"
+    }
+    ```
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    ```json
+    { 
+      "user_id": 2,
+      "ammount": 100.00,
+      "restraunt_id": 5,
+      "table_id": 34893,
+      "date": "01-12-2020",
+      "time": "15:34"
+    }
+    ```
