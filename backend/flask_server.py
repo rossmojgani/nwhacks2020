@@ -39,8 +39,8 @@ otherwise
 def check_user(userid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
-    print("GET request for userid: {}".format(int(userid)))
-    if my_col.find({'user_id': int(userid)}).count() > 0:
+    print("GET request for userid: {}".format(userid))
+    if my_col.find({'user_id': userid}).count() > 0:
         s = my_col.find_one({"user_id": int(userid)})
         print("Found userid in database, returning json {}".format(s))
         output = {'user_id': s['user_id'],
