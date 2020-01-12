@@ -214,7 +214,10 @@ def enter_waiter_fields(userid):
     x = my_col.update_many(myquery, newvalues)
     print(x.modified_count, "documents updated.")
     return jsonify({'user_id': userid,
-                    'table_id': req_data['table_id']})
+                    'restaurant_id': req_data['restaurant_id'],
+                    'phone_number': req_data['phone_number'],
+                    'role': req_data['role']})
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
