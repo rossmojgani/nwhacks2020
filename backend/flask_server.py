@@ -8,9 +8,13 @@ requests
 """
 
 from flask import Flask
+from flask import jsonify
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
-
+app.config["MONGO_DBNAME"] = 'rapidserve-db'
+app.config["MONGO_URI"] = "mongodb://localhost:27017/rapidserve-db"
+mongo = PyMongo(app)
 
 """
 Basic route used as a health check to see
@@ -55,6 +59,6 @@ def register_user(info):
 
 
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0", port=80)
-    app.run(host="127.0.0.1", port=80)
+    app.run(host="0.0.0.0", port=80)
+    #app.run(host="127.0.0.1", port=80)
 
