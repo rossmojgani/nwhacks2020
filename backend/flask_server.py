@@ -99,14 +99,18 @@ def register_user():
                    'role': role}
     my_col.insert_one(return_user)
     print("Registered user: {}".format(return_user))
-    return jsonify({'result': {'user_id': user_id,
-                               'full_name': full_name,
-                               'phone_number': phone,
-                               'credit': credit,
-                               'email': email,
-                               'restaurant_id': restaurant_id,
-                               'table_id': table_id,
-                               'role': role}})
+    return jsonify({'user_id': user_id,
+                    'full_name': full_name,
+                    'phone_number': phone,
+                    'credit': credit,
+                    'email': email,
+                    'restaurant_id': restaurant_id,
+                    'table_id': table_id,
+                    'role': role})
+
+"""
+
+"""
 
 
 if __name__ == '__main__':
