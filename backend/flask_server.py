@@ -172,6 +172,29 @@ def register_transaction():
                     'date': date,
                     'time': time})
 
+"""
+GET request to get all transactions of a user id
+
+"""
+@app.route("/users/api/v1.0/transaction_history/<userid>", methods=['GET'])
+def get_transactions(userid):
+    print(type(userid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['transactions']
+
+    print(my_col.find({'user_id': userid}))
+    print("GET request for transactions userid: {}".format(userid))
+
+    if my_col.find({'user_id': userid}).count() > 0:
+
+        transactions = my_col.find({"user_id": userid})
+
+        return jsonify(transactions)
+    else:
+        print("No transactions for given userid")
+        return ''
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # app.run(host="127.0.0.1", port=80)
