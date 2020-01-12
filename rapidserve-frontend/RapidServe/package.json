@@ -14,7 +14,6 @@
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-<<<<<<< HEAD
     "react-native-gesture-handler": "~1.5.0",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-reanimated": "~1.4.0",
@@ -23,11 +22,16 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.13"
-=======
     "react-native-web": "~0.11.7",
     "expo-barcode-scanner": "~8.0.0",
     "expo-constants": "~8.0.0"
->>>>>>> 71cc85a8a27bfd118537eff401a562f0edd9e5c1
+    "expo": "~36.0.0",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-web": "~0.11.7",
+    "expo-barcode-scanner": "~8.0.0",
+    "expo-constants": "~8.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",

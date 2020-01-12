@@ -181,6 +181,7 @@ export default class App extends Component {
   render() {
     return (<AppContainer ref={(nav) => { this.navigator = nav; }}/>);
   }
+
 }
 
 const styles = StyleSheet.create({
