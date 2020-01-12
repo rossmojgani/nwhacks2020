@@ -54,7 +54,7 @@ def check_user(userid):
         return jsonify(output)
     else:
         print("Did not find userid, returning empty json")
-        return jsonify({})
+        return ('', 204)
 
 
 """
