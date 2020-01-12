@@ -270,7 +270,7 @@ def get_order(orderid):
 
     order = my_col.find_one({"table_id": orderid})
 
-    #    return jsonify(order)
+    return jsonify(order)
     #else:
     #    print("No transactions for given orderid")
     #    return ''
