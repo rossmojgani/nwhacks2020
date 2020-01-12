@@ -3,7 +3,8 @@
 This document outlines the backend servers endpoints, their url parameters,
 data parameters, and return values
 
-**Get User Exists** ----
+**Get User Exists** 
+----
 Returns user object if a user exists and empty json otherwise
 
 * **URL**
@@ -386,7 +387,7 @@ Returns transaction objects if a user's transaction history exists and empty jso
     ```
 
 
-*Put Order Info**
+**Put Order Info**
 ----
 PUTs order info into an order object given a table id
 
@@ -490,7 +491,8 @@ Put new credit amount in user object
     ```
 
 
-**Get Table Exists** ----
+**Get Table Exists**
+----
 Returns table object if a table exists and empty json otherwise
 
 * **URL**
@@ -532,7 +534,8 @@ Returns table object if a table exists and empty json otherwise
     ```
 
 
-**Delete Table** ----
+**Delete Table**
+----
 Delete table
 
 * **URL**
