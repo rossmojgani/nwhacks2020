@@ -3,8 +3,7 @@
 This document outlines the backend servers endpoints, their url parameters,
 data parameters, and return values
 
-**Get User Exists**
-----
+**Get User Exists** ----
 Returns user object if a user exists and empty json otherwise
 
 * **URL**
@@ -487,5 +486,78 @@ Put new credit amount in user object
     { 
       "user_id": "23903284298420",
       "credit": 130.95
+    }
+    ```
+
+
+**Get Table Exists** ----
+Returns table object if a table exists and empty json otherwise
+
+* **URL**
+
+  /users/api/v1.0/table_exists/<tableid>
+
+* **Method**
+
+  `GET`
+
+* **URL Params**
+
+  **Required:**
+
+  `tableid=[string]`
+
+* **Data Params**
+
+  None
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    If user exists:
+    ```json
+    { 
+      "table_id": "155",
+      "waiter_id": "56",
+      "order": [["Burger", 100.00, 0], ["Salmon", 45.64, 1], ["Fries", 54.54, 0], ["food item", "amount cost", "paid or not"]],
+      "amount": 524.00,
+      "amount_left": 444.90
+    }
+    ```
+    If user does not exist:
+    ```json
+    {
+    }
+    ```
+
+
+**Delete Table** ----
+Delete table
+
+* **URL**
+
+  /users/api/v1.0/delete_table/<tableid>
+
+* **Method**
+
+  `DELETE`
+
+* **URL Params**
+
+  **Required:**
+
+  `tableid=[string]`
+
+* **Data Params**
+
+  None
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
     }
     ```
