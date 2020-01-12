@@ -196,3 +196,55 @@ Makes new transaction object from request json
       "time": "15:34"
     }
     ```
+    
+    
+ **Get User Transaction History**
+----
+Returns transaction objects if a user's transaction history exists and empty json otherwise
+
+* **URL**
+
+  /users/api/v1.0/transaction_history/<userid>
+
+* **Method**
+
+  `GET`
+
+* **URL Params**
+
+  **Required:**
+
+  `userid=[integer]`
+
+* **Data Params**
+
+  None
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    If user exists:
+    ```jsonhttps://docs.mongodb.com/manual/reference/method/db.collection.find/
+    { 
+      "user_id": 2,
+      "ammount": 100.00,
+      "restraunt_id": 5,
+      "table_id": 34893,
+      "date": "01-12-2020",
+      "time": "15:34"
+    }
+    { 
+      "user_id": 2,
+      "ammount": 150.00,
+      "restraunt_id": 55
+      "table_id": 343,
+      "date": "01-12-2020",
+      "time": "19:34"
+    }
+    ```
+    If user does not exists:
+    ```json
+    {
+    }
+    ```
