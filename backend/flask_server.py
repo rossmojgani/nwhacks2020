@@ -185,7 +185,6 @@ def get_transactions(userid):
         print("No transactions for given userid")
         return ''
 
-
 """
 PUT request which puts new table id in a user object given
 a user id field
@@ -325,6 +324,113 @@ def change_user_credit(userid):
     return jsonify({'user_id': userid,
                     'credit': req_data['credit']})
 
+
+"""
+POST request for an order
+
+"""
+@app.route("/users/api/v1.0/new_order", methods=['POST'])
+def register_trregister_order():
+    print("Registering ")
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    print(request.json)
+
+    req_data = request.get_json()
+    table_id = req_data['table_id']
+    waiter_id = req_data['waiter_id']
+
+    order = req_data['order']
+    ammount = req_data['ammount']
+    ammount_left = req_data['ammount_left']
+
+    return_order = {'table_id': table_id,
+                   'waiter_id': waiter_id,
+                   'order': order,
+                   'ammount': ammount,
+                   'ammount_left': ammount_left}
+
+    my_col.insert_one(return_order)
+
+    print("Registered order: {}".format(return_order))
+
+    return jsonify({'table_id': table_id,
+                   'waiter_id': waiter_id,
+                   'order': order,
+                   'ammount': ammount,
+                   'ammount_left': ammount_left})
+
+"""
+GET request for an order id
+
+"""
+@app.route("/users/api/v1.0/get_order/<orderid>", methods=['GET'])
+def get_order(orderid):
+    print(type(orderid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    my_order = my_col.find_one({"table_id": orderid})
+
+    print(my_order)
+    print("GET request for ordetable_id: {}".format(orderid))
+
+    output = {'table_id': my_order['table_id'],
+                  'waiter_id': my_order['waiter_id'],
+                  'order': my_order['order'],
+                  'ammount': my_order['ammount'],
+                  'ammount_left': my_order['ammount_left']}
+
+    return jsonify(output)
+    
+"""
+GET request route to return true if table exits
+in mongoDB and is active and false
+otherwise
+
+"""
+@app.route("/users/api/v1.0/table_exists/<tableid>", methods=['GET'])
+def check_table(tableid):
+    print(type(tableid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    print(my_col.find({'table_id': tableid}).count())
+    print("GET request for tableid: {}".format(tableid))
+
+    if my_col.find({'table_id': tableid}).count() > 0:
+        s = my_col.find_one({"table_id": tableid})
+        print("Found tableid in database, returning json {}".format(s))
+        output = {'table_id': s['table_id'],
+                  'waiter_id': s['waiter_id'],
+                  'order': s['order'],
+                  'amount': s['amount'],
+                  'amount_left': s['amount_left']}
+        return jsonify(output)
+    else:
+        print("Did not find userid, returning empty json")
+        return ''
+
+"""
+DELETE request for table_id
+
+"""
+@app.route("/users/api/v1.0/delete_table/<tableid>", methods=['DELETE'])
+def delete_table(tableid):
+    print(type(tableid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    myquery = {"table_id": tableid}
+
+    x = my_col.delete_many(myquery)
+    print(x.deleted_count, " documents deleted")
+    return ('')
 
 if __name__ == '__main__':
     # run the app on port 80
