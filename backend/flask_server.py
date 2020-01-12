@@ -305,6 +305,23 @@ def check_table(tableid):
         print("Did not find userid, returning empty json")
         return ''
 
+"""
+DELETE request for table_id
+
+"""
+@app.route("/users/api/v1.0/delete_table/<tableid>", methods=['DELETE'])
+def delete_table(tableid):
+    print(type(tableid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    myquery = {"table_id": tableid}
+
+    x = my_col.delete_many(myquery)
+    print(x.deleted_count, " documents deleted")
+    return ('')
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # app.run(host="127.0.0.1", port=80)
