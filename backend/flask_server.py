@@ -326,30 +326,6 @@ def change_user_credit(userid):
 
 
 """
-GET request for an order id
-
-"""
-@app.route("/users/api/v1.0/get_order/<orderid>", methods=['GET'])
-def get_order(orderid):
-    print(type(orderid))
-
-    mydb = myclient['rapidserve-db']
-    my_col = mydb['orders']
-
-    my_order = my_col.find_one({"table_id": orderid})
-
-    print(my_order)
-    print("GET request for ordetable_id: {}".format(orderid))
-
-    output = {'table_id': my_order['table_id'],
-                  'waiter_id': my_order['waiter_id'],
-                  'order': my_order['order'],
-                  'ammount': my_order['ammount'],
-                  'ammount_left': my_order['ammount_left']}
-
-    return jsonify(output)
-    
-"""
 GET request route to return true if table exits
 in mongoDB and is active and false
 otherwise
