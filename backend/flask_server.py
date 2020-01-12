@@ -271,7 +271,7 @@ def get_order(orderid):
     ouput = {'table_id': my_order['table_id'],
                   'waiter_id': my_order['waiter_id'],
                   'order': my_order['order'],
-                  'ammount': my_order['ammount']
+                  'ammount': my_order['ammount'],
                   'ammount_left': my_order['ammount_left']}
 
     return jsonify(output)
