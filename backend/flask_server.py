@@ -40,10 +40,10 @@ def check_user(userid):
     print(type(userid))
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
-    print(my_col.find({'user_id': int(userid)}).count())
+    print(my_col.find({'user_id': userid}).count())
     print("GET request for userid: {}".format(userid))
-    if my_col.find({'user_id': int(userid)}).count() > 0:
-        s = my_col.find_one({"user_id": int(userid)})
+    if my_col.find({'user_id': userid}).count() > 0:
+        s = my_col.find_one({"user_id": userid})
         print("Found userid in database, returning json {}".format(s))
         output = {'user_id': s['user_id'],
                   'full_name': s['full_name'],
@@ -80,7 +80,7 @@ def register_user():
     print("Registering user")
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
-    user_id = int(request.json['user_id'])
+    user_id = request.json['user_id']
     print(user_id)
     full_name = request.json['full_name']
     phone = request.json['phone_number']
@@ -89,7 +89,7 @@ def register_user():
     restaurant_id = request.json['restaurant_id']
     table_id = request.json['table_id']
     role = request.json['role']
-    return_user = {'user_id': int(user_id),
+    return_user = {'user_id': user_id,
                    'full_name': full_name,
                    'phone_number': phone,
                    'credit': credit,
@@ -118,7 +118,7 @@ a user id field
 def enter_table_id(userid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
-    myquery = {"user_id": int(userid)}
+    myquery = {"user_id": userid}
     newvalues = {"$set": {"table_id": request.json['table_id']}}
     x = my_col.update_many(myquery, newvalues)
     print(x.modified_count, "documents updated.")
