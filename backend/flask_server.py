@@ -108,9 +108,22 @@ def register_user():
                     'table_id': table_id,
                     'role': role})
 
-"""
 
 """
+PUT request which puts new table id in a user object given
+a user id field
+
+"""
+@app.route("/users/api/v1.0/<userid>", methods=['PUT'])
+def enter_table_id(userid):
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['users']
+    myquery = {"user_id": int(userid)}
+    newvalues = {"$set": {"table_id": request.json['table_id']}}
+    x = my_col.update_many(myquery, newvalues)
+    print(x.modified_count, "documents updated.")
+    return jsonify({'user_id': userid,
+                    'table_id': request.json['table_id']})
 
 
 if __name__ == '__main__':
