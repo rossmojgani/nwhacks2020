@@ -268,7 +268,7 @@ def get_order(orderid):
     print(my_order)
     print("GET request for ordetable_id: {}".format(orderid))
 
-    ouput = {'table_id': my_order['table_id'],
+    output = {'table_id': my_order['table_id'],
                   'waiter_id': my_order['waiter_id'],
                   'order': my_order['order'],
                   'ammount': my_order['ammount'],
