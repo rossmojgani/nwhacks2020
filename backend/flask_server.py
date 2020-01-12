@@ -89,7 +89,7 @@ def register_user():
                    'email': email,
                    'restaurant_id': restaurant_id,
                    'table_id': table_id,
-                   'role': role})
+                   'role': role}
     my_col.insert_one(return_user)
     return jsonify(return_user)
 
