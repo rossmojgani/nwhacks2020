@@ -58,8 +58,26 @@ database based on userid argument
 """
 @app.route("/users/api/v1.0/<userid>", methods=['GET'])
 def get_user(userid):
-    # TODO: query mongodb for user object
-    return "User ID Object {}".format(userid)
+print(type(userid))
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['users']
+    print(my_col.find({'user_id': userid}).count())
+    print("GET request for userid: {}".format(userid))
+    if my_col.find({'user_id': userid}).count() > 0:
+        s = my_col.find_one({"user_id": userid})
+        print("Found userid in database, returning json {}".format(s))
+        output = {'user_id': s['user_id'],
+                  'full_name': s['full_name'],
+                  'phone_number': s['phone_number'],
+                  'credit': s['credit'],
+                  'email': s['email'],
+                  'restaurant_id': s['restaurant_id'],
+                  'table_id': s['table_id'],
+                  'role': s['role']}
+        return jsonify(output)
+    else:
+        print("Did not find userid, returning empty json")
+        return ''
 
 
 """
