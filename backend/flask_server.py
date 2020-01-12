@@ -39,9 +39,10 @@ otherwise
 def check_user(userid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
+    print("GET request for userid: {}".format(int(userid)))
     if my_col.find({'user_id': int(userid)}).count() > 0:
         s = my_col.find_one({"user_id": int(userid)})
-        print(s)
+        print("Found userid in database, returning json {}".format(s))
         output = {'user_id': s['user_id'],
                   'full_name': s['full_name'],
                   'phone_number': s['phone_number'],
@@ -52,6 +53,7 @@ def check_user(userid):
                   'role': s['role']}
         return jsonify(output)
     else:
+        print("Did not find userid, returning empty json")
         return jsonify({})
 
 
@@ -73,6 +75,7 @@ with correct fields
 """
 @app.route("/users/api/v1.0/register", methods=['POST'])
 def register_user():
+    print("Registering user")
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
     user_id = request.json['user_id']
@@ -92,6 +95,7 @@ def register_user():
                    'table_id': table_id,
                    'role': role}
     my_col.insert_one(return_user)
+    print("Registered user: {}".format(return_user))
     return jsonify({'result': {'user_id': user_id,
                                'full_name': full_name,
                                'phone_number': phone,
