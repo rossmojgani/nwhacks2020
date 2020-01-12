@@ -39,8 +39,19 @@ otherwise
 def check_user(userid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['users']
-    found = my_col.find({"user_id": userid})
-    return "User ID {} found: {}".format(userid, found)
+    s = my_col.find_one({"user_id": userid})
+    if s:
+        output = {'user_id': s['user_id'],
+                  'full_name': s['full_name'],
+                  'phone_number': s['phone_number'],
+                  'credit': s['credit'],
+                  'email': s['email'],
+                  'restaurant_id': s['restaurant_id'],
+                  'table_id': s['table_id'],
+                  'role': s['role']}
+        return jsonify(output)
+    else:
+        return jsonify({})
 
 
 """
@@ -71,15 +82,16 @@ def register_user():
     restaurant_id = request.json['restaurant_id']
     table_id = request.json['table_id']
     role = request.json['role']
-    my_col.insert_one({'user_id': user_id,
-                       'full_name': full_name,
-                       'phone_number': phone,
-                       'credit': credit,
-                       'email': email,
-                       'restaurant_id': restaurant_id,
-                       'table_id': table_id,
-                       'role': role})
-    return "Storing user! {}".format(request.json)
+    return_user = {'user_id': user_id,
+                   'full_name': full_name,
+                   'phone_number': phone,
+                   'credit': credit,
+                   'email': email,
+                   'restaurant_id': restaurant_id,
+                   'table_id': table_id,
+                   'role': role})
+    my_col.insert_one(return_user)
+    return jsonify(return_user)
 
 
 if __name__ == '__main__':
