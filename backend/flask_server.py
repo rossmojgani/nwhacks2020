@@ -263,17 +263,18 @@ def get_order(orderid):
     mydb = myclient['rapidserve-db']
     my_col = mydb['orders']
 
-    order = my_col.find_one({"table_id": orderid})
+    my_order = my_col.find_one({"table_id": orderid})
 
-    print(order)
+    print(my_order)
     print("GET request for ordetable_id: {}".format(orderid))
 
-    #if my_col.find_one({'table_id': orderid}).count() > 0:
+    ouput = {'table_id': my_order['table_id'],
+                  'waiter_id': my_order['waiter_id'],
+                  'order': my_order['order'],
+                  'ammount': my_order['ammount']
+                  'ammount_left': my_order['ammount_left']}
 
-    return jsonify(order)
-    #else:
-    #    print("No transactions for given orderid")
-    #    return ''
+    return jsonify(output)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
