@@ -37,8 +37,10 @@ otherwise
 """
 @app.route("/users/api/v1.0/exists/<userid>", methods=['GET'])
 def check_user(userid):
-    # TODO: query mongodb to see if userid exists and is active
-    return "User ID {}".format(userid)
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['users']
+    found = my_col.find({"user_id": userid})
+    return "User ID {} found: {}".format(userid, found)
 
 
 """
@@ -69,15 +71,14 @@ def register_user():
     restaurant_id = request.json['restaurant_id']
     table_id = request.json['table_id']
     role = request.json['role']
-    print("GOT TO BEFORE INSERTION")
     my_col.insert_one({'user_id': user_id,
-                             'full_name': full_name,
-                             'phone_number': phone,
-                             'credit': credit,
-                             'email': email,
-                             'restaurant_id': restaurant_id,
-                             'table_id': table_id,
-                             'role': role})
+                       'full_name': full_name,
+                       'phone_number': phone,
+                       'credit': credit,
+                       'email': email,
+                       'restaurant_id': restaurant_id,
+                       'table_id': table_id,
+                       'role': role})
     return "Storing user! {}".format(request.json)
 
 
