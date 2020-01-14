@@ -1,7 +1,7 @@
 <p align="center">
   <img width=290 height=83 src="rapidserve-frontend/RapidServe/images/logo.png" />
 </p>
-
+<h1 align="center">Awarded "Best use of MongoDB" at nwHacks 2020</h1>
 <h3 align="center">Simple QR Code Bill Payment</h3>
 <h4 align="center">nwHacks 2020 Hackathon Project</h4>
 <h4 align="center">Main repository for the rapidserve application</h4>
